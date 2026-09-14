@@ -4,6 +4,7 @@ import {
   Sparkles, Droplets, BookOpen, Check, Palette 
 } from 'lucide-react';
 import { RECITERS } from '../data/quranData';
+import QuranLogo from './QuranLogo';
 
 export const APP_THEMES = [
   {
@@ -100,10 +101,8 @@ export default function Header({
             <Menu size={22} />
           </button>
           
-          <div className="hidden sm:flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-emerald-600/20">
-              ق
-            </div>
+          <div className="hidden sm:flex items-center gap-2.5">
+            <QuranLogo size="sm" />
             <div>
               <span className="font-arabic font-bold text-emerald-950 dark:text-emerald-300 text-sm block leading-none">
                 القرآن الكريم

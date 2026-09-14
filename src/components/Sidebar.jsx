@@ -5,6 +5,7 @@ import {
   Headphones, User
 } from 'lucide-react';
 import AvatarBadge from './AvatarBadge';
+import QuranLogo from './QuranLogo';
 
 export default function Sidebar({
   currentView,
@@ -49,9 +50,7 @@ export default function Sidebar({
           {/* Brand header */}
           <div className="flex items-center justify-between pb-5 mb-4 border-b border-stone-100 dark:border-emerald-950/60">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-emerald-400 p-0.5 shadow-lg shadow-emerald-700/20 flex items-center justify-center text-white">
-                <Book size={24} className="text-amber-300 drop-shadow" />
-              </div>
+              <QuranLogo size="md" />
               <div>
                 <h1 className="font-bold text-lg font-arabic text-emerald-950 dark:text-emerald-100 leading-tight">
                   القرآن الكريم
