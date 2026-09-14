@@ -2,74 +2,275 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-  .glass-card-dark {
-    background: rgba(18, 26, 23, 0.75);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
+/* =========================================================
+   AIQURAN FULL THEME ENGINE
+   All colors are CSS custom properties. Themes are applied
+   by setting [data-theme="..."] on <html>. Every component
+   consumes these tokens via Tailwind's t-* color classes.
+   ========================================================= */
+
+/* ── THEME 1: Emerald Oasis (Default / Light) ────────────── */
+:root,
+[data-theme="emerald"] {
+  --t-bg:           #F5F7F3;
+  --t-surface:      #FFFFFF;
+  --t-surface2:     #EEF1EB;
+  --t-border:       rgba(5, 150, 105, 0.18);
+  --t-text:         #14201C;
+  --t-text2:        #3D5249;
+  --t-muted:        #7A9289;
+  --t-accent:       #059669;
+  --t-accent2:      #0D9488;
+  --t-gold:         #B45309;
+  --t-ring:         rgba(5, 150, 105, 0.35);
+  --t-header:       rgba(255, 255, 255, 0.88);
+  --t-sidebar:      rgba(255, 255, 255, 0.97);
+  --t-input:        #EEF1EB;
+  --t-btn:          #059669;
+  --t-btn-text:     #FFFFFF;
+  --t-card:         #FFFFFF;
+  --t-nav-active-from: #065F46;
+  --t-nav-active-to:   #0F766E;
+  --t-progress:     #059669;
+  --t-gradient:     linear-gradient(135deg, #F5F7F3 0%, #E6EDE8 100%);
+  color-scheme: light;
 }
 
-:root, [data-theme="emerald"] {
-  --bg-primary: #F8F9F5;
-  --text-primary: #1C1F1D;
-  --accent-gold: #D4AF37;
-  --accent-emerald: #059669;
-  --theme-ring: rgba(5, 150, 105, 0.3);
+/* ── THEME 2: Midnight Layl (Dark) ───────────────────────── */
+[data-theme="dark"] {
+  --t-bg:           #080E0C;
+  --t-surface:      #0F1A15;
+  --t-surface2:     #152019;
+  --t-border:       rgba(16, 185, 129, 0.15);
+  --t-text:         #E8F0EC;
+  --t-text2:        #A8C4B8;
+  --t-muted:        #5A7A6B;
+  --t-accent:       #10B981;
+  --t-accent2:      #0EA5E9;
+  --t-gold:         #F59E0B;
+  --t-ring:         rgba(16, 185, 129, 0.35);
+  --t-header:       rgba(8, 14, 12, 0.92);
+  --t-sidebar:      rgba(10, 18, 14, 0.98);
+  --t-input:        #152019;
+  --t-btn:          #10B981;
+  --t-btn-text:     #080E0C;
+  --t-card:         #0F1A15;
+  --t-nav-active-from: #065F46;
+  --t-nav-active-to:   #047857;
+  --t-progress:     #10B981;
+  --t-gradient:     linear-gradient(135deg, #080E0C 0%, #10190F 100%);
+  color-scheme: dark;
 }
 
-[data-theme="dark"], .dark {
-  --bg-primary: #0A110F;
-  --text-primary: #F3F4F1;
-  --accent-gold: #F59E0B;
-  --accent-emerald: #10B981;
-  --theme-ring: rgba(16, 185, 129, 0.3);
-}
-
+/* ── THEME 3: Royal Amber (Gold / Imperial) ──────────────── */
 [data-theme="amber"] {
-  --bg-primary: #FDF8EE;
-  --text-primary: #281A08;
-  --accent-gold: #D97706;
-  --accent-emerald: #B45309;
-  --theme-ring: rgba(217, 119, 6, 0.3);
+  --t-bg:           #FDF7EC;
+  --t-surface:      #FFFBF3;
+  --t-surface2:     #F5E8CA;
+  --t-border:       rgba(180, 83, 9, 0.18);
+  --t-text:         #271504;
+  --t-text2:        #6B3D0F;
+  --t-muted:        #9A6A38;
+  --t-accent:       #B45309;
+  --t-accent2:      #D97706;
+  --t-gold:         #92400E;
+  --t-ring:         rgba(217, 119, 6, 0.35);
+  --t-header:       rgba(253, 247, 236, 0.90);
+  --t-sidebar:      rgba(255, 251, 243, 0.98);
+  --t-input:        #F5E8CA;
+  --t-btn:          #B45309;
+  --t-btn-text:     #FFFFFF;
+  --t-card:         #FFFBF3;
+  --t-nav-active-from: #92400E;
+  --t-nav-active-to:   #B45309;
+  --t-progress:     #D97706;
+  --t-gradient:     linear-gradient(135deg, #FDF7EC 0%, #F5E8CA 100%);
+  color-scheme: light;
 }
 
+/* ── THEME 4: Celestial Sapphire (Blue / Ocean) ──────────── */
 [data-theme="blue"] {
-  --bg-primary: #F0F7FF;
-  --text-primary: #0F172A;
-  --accent-gold: #0284C7;
-  --accent-emerald: #0369A1;
-  --theme-ring: rgba(2, 132, 199, 0.3);
+  --t-bg:           #EFF6FF;
+  --t-surface:      #FFFFFF;
+  --t-surface2:     #DBEAFE;
+  --t-border:       rgba(14, 116, 144, 0.18);
+  --t-text:         #0C1A2E;
+  --t-text2:        #1E3A5F;
+  --t-muted:        #5483A0;
+  --t-accent:       #0284C7;
+  --t-accent2:      #0E7490;
+  --t-gold:         #0369A1;
+  --t-ring:         rgba(2, 132, 199, 0.35);
+  --t-header:       rgba(255, 255, 255, 0.88);
+  --t-sidebar:      rgba(255, 255, 255, 0.97);
+  --t-input:        #DBEAFE;
+  --t-btn:          #0284C7;
+  --t-btn-text:     #FFFFFF;
+  --t-card:         #FFFFFF;
+  --t-nav-active-from: #075985;
+  --t-nav-active-to:   #0E7490;
+  --t-progress:     #0284C7;
+  --t-gradient:     linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  color-scheme: light;
 }
 
+/* ── THEME 5: Andalusian Sepia (Manuscript Warm) ─────────── */
 [data-theme="sepia"] {
-  --bg-primary: #F6EFE2;
-  --text-primary: #2A1E11;
-  --accent-gold: #8C6D38;
-  --accent-emerald: #A17D46;
-  --theme-ring: rgba(140, 109, 56, 0.3);
+  --t-bg:           #F4EDD8;
+  --t-surface:      #FAF5E8;
+  --t-surface2:     #E8DBC0;
+  --t-border:       rgba(120, 80, 30, 0.20);
+  --t-text:         #2A1505;
+  --t-text2:        #5C3410;
+  --t-muted:        #906B40;
+  --t-accent:       #7C5427;
+  --t-accent2:      #A0713A;
+  --t-gold:         #5E3D10;
+  --t-ring:         rgba(124, 84, 39, 0.35);
+  --t-header:       rgba(244, 237, 216, 0.90);
+  --t-sidebar:      rgba(250, 245, 232, 0.98);
+  --t-input:        #E8DBC0;
+  --t-btn:          #7C5427;
+  --t-btn-text:     #FAF5E8;
+  --t-card:         #FAF5E8;
+  --t-nav-active-from: #5E3D10;
+  --t-nav-active-to:   #7C5427;
+  --t-progress:     #7C5427;
+  --t-gradient:     linear-gradient(135deg, #F4EDD8 0%, #E8DBC0 100%);
+  color-scheme: light;
+}
+
+/* ── THEME 6: Rose Garden (Soft Pink / Feminine) ─────────── */
+[data-theme="rose"] {
+  --t-bg:           #FFF1F4;
+  --t-surface:      #FFFFFF;
+  --t-surface2:     #FCE7EC;
+  --t-border:       rgba(190, 18, 60, 0.14);
+  --t-text:         #1F0A10;
+  --t-text2:        #6D1D30;
+  --t-muted:        #B06070;
+  --t-accent:       #E11D48;
+  --t-accent2:      #BE185D;
+  --t-gold:         #9F1239;
+  --t-ring:         rgba(225, 29, 72, 0.30);
+  --t-header:       rgba(255, 241, 244, 0.90);
+  --t-sidebar:      rgba(255, 255, 255, 0.97);
+  --t-input:        #FCE7EC;
+  --t-btn:          #E11D48;
+  --t-btn-text:     #FFFFFF;
+  --t-card:         #FFFFFF;
+  --t-nav-active-from: #9F1239;
+  --t-nav-active-to:   #BE185D;
+  --t-progress:     #E11D48;
+  --t-gradient:     linear-gradient(135deg, #FFF1F4 0%, #FCE7EC 100%);
+  color-scheme: light;
+}
+
+/* ── THEME 7: Cosmic Purple (Deep Violet Night) ──────────── */
+[data-theme="purple"] {
+  --t-bg:           #0D0A18;
+  --t-surface:      #160F2A;
+  --t-surface2:     #1E1438;
+  --t-border:       rgba(139, 92, 246, 0.18);
+  --t-text:         #EDE9FE;
+  --t-text2:        #C4B5FD;
+  --t-muted:        #7C5FBB;
+  --t-accent:       #8B5CF6;
+  --t-accent2:      #A78BFA;
+  --t-gold:         #F59E0B;
+  --t-ring:         rgba(139, 92, 246, 0.40);
+  --t-header:       rgba(13, 10, 24, 0.92);
+  --t-sidebar:      rgba(16, 12, 28, 0.98);
+  --t-input:        #1E1438;
+  --t-btn:          #8B5CF6;
+  --t-btn-text:     #FFFFFF;
+  --t-card:         #160F2A;
+  --t-nav-active-from: #5B21B6;
+  --t-nav-active-to:   #7C3AED;
+  --t-progress:     #8B5CF6;
+  --t-gradient:     linear-gradient(135deg, #0D0A18 0%, #1A1030 100%);
+  color-scheme: dark;
+}
+
+/* ================================================================
+   GLOBAL BODY & BASE STYLES – use theme tokens
+   ================================================================ */
+html {
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 body {
   margin: 0;
   padding: 0;
+  background-color: var(--t-bg);
+  color: var(--t-text);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Selection highlight adapts to accent color */
+::selection {
+  background: var(--t-accent);
+  color: var(--t-btn-text);
+  opacity: 0.25;
+}
+
+/* ================================================================
+   SCROLLBAR UTILITIES
+   ================================================================ */
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Themed glass card */
+  .glass-card {
+    background: var(--t-header);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Themed primary button - instant via CSS vars */
+  .btn-primary {
+    background-color: var(--t-btn);
+    color: var(--t-btn-text);
+    transition: filter 0.15s ease, transform 0.1s ease;
+  }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* Themed input field */
+  .input-themed {
+    background-color: var(--t-input);
+    color: var(--t-text);
+    border-color: var(--t-border);
+  }
+  .input-themed:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--t-ring);
+    border-color: var(--t-accent);
+  }
+
+  /* Themed card surface */
+  .card-themed {
+    background-color: var(--t-card);
+    border-color: var(--t-border);
+    color: var(--t-text);
+  }
+
+  /* Smooth theme transition on all elements */
+  .theme-transition {
+    transition:
+      background-color 0.4s ease,
+      border-color 0.3s ease,
+      color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+}
+
+/* ================================================================
+   TYPOGRAPHY
+   ================================================================ */
 .font-arabic {
   font-family: 'Amiri', 'Cairo', 'Scheherazade New', serif;
 }
@@ -80,24 +281,43 @@ body {
   word-spacing: 0.15em;
 }
 
-/* Tajweed Rule Highlights */
+/* ================================================================
+   TAJWEED HIGHLIGHTS – remain fixed colors for readability
+   ================================================================ */
 .tajweed-qalqalah {
-  color: #2563EB; /* Blue */
+  color: #2563EB;
   font-weight: 700;
   border-bottom: 2px dotted #93C5FD;
 }
 .tajweed-ghunnah {
-  color: #D97706; /* Amber */
+  color: #D97706;
   font-weight: 700;
   border-bottom: 2px dotted #FDE68A;
 }
 .tajweed-madd {
-  color: #DC2626; /* Crimson Red */
+  color: #DC2626;
   font-weight: 700;
   border-bottom: 2px dotted #FCA5A5;
 }
 .tajweed-ikhfa {
-  color: #059669; /* Emerald */
+  color: #059669;
   font-weight: 700;
   border-bottom: 2px dotted #A7F3D0;
+}
+
+/* ================================================================
+   PROGRESS BAR – theme-driven
+   ================================================================ */
+.progress-bar-fill {
+  background-color: var(--t-progress);
+  transition: width 0.8s ease, background-color 0.4s ease;
+}
+
+/* ================================================================
+   ACTIVE NAV ITEM GRADIENT – theme-driven
+   ================================================================ */
+.nav-active {
+  background: linear-gradient(to left, var(--t-nav-active-from), var(--t-nav-active-to));
+  color: white;
+  box-shadow: 0 4px 20px -6px var(--t-accent);
 }

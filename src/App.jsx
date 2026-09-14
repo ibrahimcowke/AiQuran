@@ -16,8 +16,8 @@ import { SURAHS_INDEX, SURAH_DETAILS, RECITERS } from './data/quranData';
 export default function App() {
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('aiquran_theme');
-    if (!saved || saved === 'light') return 'emerald';
-    return saved;
+    const valid = ['emerald','dark','amber','blue','sepia','rose','purple'];
+    return valid.includes(saved) ? saved : 'emerald';
   });
   const [currentView, setCurrentView] = useState('dashboard');
   const [activeSurahId, setActiveSurahId] = useState(1);
@@ -97,11 +97,13 @@ export default function App() {
     });
   };
 
-  // Sync theme with HTML document element
   useEffect(() => {
     localStorage.setItem('aiquran_theme', theme);
     document.documentElement.setAttribute('data-theme', theme);
-    if (theme === 'dark') {
+    // Add .dark class for themes that use dark color-scheme so
+    // Tailwind dark: variants and native browser chrome behave correctly
+    const darkThemes = ['dark', 'purple'];
+    if (darkThemes.includes(theme)) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
@@ -154,17 +156,10 @@ export default function App() {
     };
   });
 
-  const themeBgClasses = {
-    emerald: 'bg-[#F8F9F5] text-stone-900',
-    dark: 'bg-[#0A110F] text-stone-100',
-    amber: 'bg-[#FDF8EE] text-stone-900',
-    blue: 'bg-[#F0F7FF] text-stone-900',
-    sepia: 'bg-[#F6EFE2] text-[#2C1E11]'
-  };
-
   return (
-    <div 
-      className={`min-h-screen flex flex-col ${themeBgClasses[theme] || themeBgClasses.emerald} transition-colors selection:bg-emerald-200 dark:selection:bg-emerald-900`}
+    <div
+      className="min-h-screen flex flex-col theme-transition"
+      style={{ backgroundColor: 'var(--t-bg)', color: 'var(--t-text)' }}
       dir="rtl"
     >
       <div className="flex-1 flex flex-row w-full relative">

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Search, Sun, Moon, Bell, Volume2, Menu, ShieldCheck, X, 
-  Sparkles, Droplets, BookOpen, Check, Palette 
+  Sparkles, Droplets, BookOpen, Check, Palette, Leaf, Stars, Flower2
 } from 'lucide-react';
 import { RECITERS } from '../data/quranData';
 import QuranLogo from './QuranLogo';
@@ -11,40 +11,32 @@ export const APP_THEMES = [
     id: 'emerald',
     nameAr: 'نور زمردي',
     nameEn: 'Emerald Oasis',
-    icon: Sun,
-    iconColor: 'text-emerald-600 dark:text-emerald-400',
-    badgeColor: 'bg-emerald-500',
-    dotBg: 'bg-emerald-500',
-    desc: 'إشراق نهاري مبهج بلمسات خضراء'
+    icon: Leaf,
+    preview: ['#059669', '#0D9488', '#F5F7F3'],
+    desc: 'إشراق نهاري بلمسات خضراء زمردية'
   },
   {
     id: 'dark',
     nameAr: 'سكون الليل',
     nameEn: 'Midnight Layl',
     icon: Moon,
-    iconColor: 'text-indigo-400',
-    badgeColor: 'bg-indigo-600',
-    dotBg: 'bg-indigo-600',
-    desc: 'سواد داكن مريح للقراءة الهادئة'
+    preview: ['#10B981', '#080E0C', '#0F1A15'],
+    desc: 'داكن مريح للقراءة الهادئة في الظلام'
   },
   {
     id: 'amber',
     nameAr: 'ذهبي ملكي',
     nameEn: 'Royal Imperial Gold',
     icon: Sparkles,
-    iconColor: 'text-amber-500',
-    badgeColor: 'bg-amber-500',
-    dotBg: 'bg-amber-500',
-    desc: 'أناقة ملكية وتطريز ذهبي'
+    preview: ['#B45309', '#D97706', '#FDF7EC'],
+    desc: 'أناقة ملكية وتطريز ذهبي فاخر'
   },
   {
     id: 'blue',
     nameAr: 'أزرق سماوي',
     nameEn: 'Celestial Sapphire',
     icon: Droplets,
-    iconColor: 'text-sky-500',
-    badgeColor: 'bg-sky-500',
-    dotBg: 'bg-sky-500',
+    preview: ['#0284C7', '#0E7490', '#EFF6FF'],
     desc: 'هدوء سماوي بلون الياقوت الأزرق'
   },
   {
@@ -52,11 +44,25 @@ export const APP_THEMES = [
     nameAr: 'مخطوطة أندلسية',
     nameEn: 'Desert Sepia',
     icon: BookOpen,
-    iconColor: 'text-[#8C6D38]',
-    badgeColor: 'bg-[#8C6D38]',
-    dotBg: 'bg-[#8C6D38]',
-    desc: 'ورق مخطوطات عريق دافئ وعالي التباين'
-  }
+    preview: ['#7C5427', '#A0713A', '#F4EDD8'],
+    desc: 'ورق مخطوطات عريق دافئ كلاسيكي'
+  },
+  {
+    id: 'rose',
+    nameAr: 'حديقة الورد',
+    nameEn: 'Rose Garden',
+    icon: Flower2,
+    preview: ['#E11D48', '#BE185D', '#FFF1F4'],
+    desc: 'ناعم وجميل بتدرجات الوردي الهادئ'
+  },
+  {
+    id: 'purple',
+    nameAr: 'كوني بنفسجي',
+    nameEn: 'Cosmic Purple',
+    icon: Stars,
+    preview: ['#8B5CF6', '#A78BFA', '#0D0A18'],
+    desc: 'عمق كوني بلون البنفسج الداكن الليلي'
+  },
 ];
 
 export default function Header({
@@ -71,31 +77,45 @@ export default function Header({
   const [showNotifications, setShowNotifications] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   const themeMenuRef = useRef(null);
+  const notifRef = useRef(null);
 
-  // Close theme menu when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (themeMenuRef.current && !themeMenuRef.current.contains(e.target)) {
         setShowThemeMenu(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setShowNotifications(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Find active theme configuration
   const currentThemeConfig = APP_THEMES.find(t => t.id === theme) || APP_THEMES[0];
   const ActiveThemeIcon = currentThemeConfig.icon;
 
+  const isDarkTheme = theme === 'dark' || theme === 'purple';
+
   return (
-    <header className="sticky top-0 z-30 w-full bg-white/80 dark:bg-[#111A17]/80 backdrop-blur-xl border-b border-stone-200/80 dark:border-emerald-900/40 px-4 lg:px-8 py-3.5 transition-colors">
+    <header
+      className="sticky top-0 z-30 w-full backdrop-blur-xl border-b px-4 lg:px-8 py-3.5 theme-transition"
+      style={{
+        backgroundColor: 'var(--t-header)',
+        borderColor: 'var(--t-border)',
+      }}
+    >
       <div className="flex items-center justify-between gap-4 max-w-7xl mx-auto">
         
-        {/* Mobile Menu Button + Brand info */}
+        {/* Mobile Menu Button + Brand */}
         <div className="flex items-center gap-3">
           <button
             onClick={toggleMobileMenu}
-            className="lg:hidden p-2 rounded-xl text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-emerald-950/60 transition-colors"
+            className="lg:hidden p-2 rounded-xl transition-colors theme-transition"
+            style={{ color: 'var(--t-text2)' }}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = 'var(--t-surface2)'}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = 'transparent'}
             aria-label="Open menu"
           >
             <Menu size={22} />
@@ -104,38 +124,59 @@ export default function Header({
           <div className="hidden sm:flex items-center gap-2.5">
             <QuranLogo size="sm" />
             <div>
-              <span className="font-arabic font-bold text-emerald-950 dark:text-emerald-300 text-sm block leading-none">
+              <span className="font-arabic font-bold text-sm block leading-none theme-transition" style={{ color: 'var(--t-text)' }}>
                 القرآن الكريم
               </span>
-              <span className="text-[10px] text-stone-500 dark:text-stone-400 font-sans">
+              <span className="text-[10px] font-sans theme-transition" style={{ color: 'var(--t-muted)' }}>
                 AiQuran Intelligent Companion
               </span>
             </div>
           </div>
         </div>
 
-        {/* Center: Global Search Bar Button (triggers GlobalSearchModal) */}
+        {/* Center: Global Search */}
         <div className="relative flex-1 max-w-md mx-2">
           <button
             onClick={onOpenSearchModal}
-            className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl bg-stone-100/90 dark:bg-emerald-950/40 text-stone-500 dark:text-stone-400 text-xs sm:text-sm border border-stone-200/80 dark:border-emerald-900/50 hover:border-emerald-500/50 font-arabic transition-all shadow-inner text-right group"
+            className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-arabic transition-all shadow-inner text-right group theme-transition"
+            style={{
+              backgroundColor: 'var(--t-input)',
+              color: 'var(--t-muted)',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              borderColor: 'var(--t-border)',
+            }}
           >
             <div className="flex items-center gap-2.5">
-              <Search size={16} className="text-stone-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition" />
+              <Search size={16} style={{ color: 'var(--t-muted)' }} />
               <span>ابحث عن سورة، آية، أو علامة مرجعية...</span>
             </div>
-            <kbd className="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-mono text-stone-400 bg-white dark:bg-stone-800 rounded border border-stone-200 dark:border-stone-700">
+            <kbd
+              className="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-mono rounded border theme-transition"
+              style={{
+                color: 'var(--t-muted)',
+                backgroundColor: 'var(--t-surface)',
+                borderColor: 'var(--t-border)',
+              }}
+            >
               Ctrl + K
             </kbd>
           </button>
         </div>
 
-        {/* Right: Reciter Selector + Multi-Theme Switcher + Notifications */}
+        {/* Right: Reciter + Theme Switcher + Notifications */}
         <div className="flex items-center gap-2">
           
-          {/* Reciter dropdown selector */}
-          <div className="hidden md:flex items-center gap-2 bg-stone-100/90 dark:bg-emerald-950/40 border border-stone-200/80 dark:border-emerald-900/40 rounded-2xl px-2.5 py-1.5 text-xs text-stone-700 dark:text-stone-200">
-            <Volume2 size={15} className="text-emerald-600 dark:text-emerald-400" />
+          {/* Reciter selector */}
+          <div
+            className="hidden md:flex items-center gap-2 rounded-2xl px-2.5 py-1.5 text-xs border theme-transition"
+            style={{
+              backgroundColor: 'var(--t-surface2)',
+              borderColor: 'var(--t-border)',
+              color: 'var(--t-text)',
+            }}
+          >
+            <Volume2 size={15} style={{ color: 'var(--t-accent)' }} />
             <select
               value={selectedReciter.id}
               onChange={(e) => {
@@ -143,45 +184,75 @@ export default function Header({
                 if (rec) setSelectedReciter(rec);
               }}
               className="bg-transparent text-xs font-arabic font-semibold focus:outline-none cursor-pointer"
+              style={{ color: 'var(--t-text)' }}
             >
               {RECITERS.map(r => (
-                <option key={r.id} value={r.id} className="dark:bg-[#14201C] text-stone-900 dark:text-stone-100">
+                <option key={r.id} value={r.id} style={{ backgroundColor: 'var(--t-card)', color: 'var(--t-text)' }}>
                   {r.nameAr}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* DYNAMIC MULTI-THEME SWITCHER WITH POPOVER */}
+          {/* THEME SWITCHER */}
           <div className="relative" ref={themeMenuRef}>
             <button
               onClick={() => setShowThemeMenu(!showThemeMenu)}
-              className="w-9 h-9 rounded-2xl bg-stone-100 dark:bg-emerald-950/60 flex items-center justify-center hover:scale-105 active:scale-95 transition-all border border-stone-200/80 dark:border-emerald-900/50 relative group"
-              title={`المظهر: ${currentThemeConfig.nameAr} (انقر للاختيار)`}
+              className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all border relative overflow-hidden group theme-transition"
+              style={{
+                backgroundColor: 'var(--t-surface2)',
+                borderColor: 'var(--t-border)',
+              }}
+              title={`المظهر: ${currentThemeConfig.nameAr} — انقر لتغييره`}
               aria-label="تغيير مظهر التطبيق"
             >
-              <ActiveThemeIcon size={18} className={`${currentThemeConfig.iconColor} transition-transform group-hover:scale-110`} />
-              
-              {/* Subtle active color badge in corner */}
-              <span className={`absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full ${currentThemeConfig.badgeColor} ring-1 ring-white dark:ring-[#111A17]`} />
+              {/* Color dots preview from current theme */}
+              <div className="flex gap-0.5">
+                {currentThemeConfig.preview.slice(0, 2).map((c, i) => (
+                  <span
+                    key={i}
+                    className="w-2 h-2 rounded-full transition-transform group-hover:scale-125"
+                    style={{ backgroundColor: c }}
+                  />
+                ))}
+              </div>
+              <span
+                className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full ring-1"
+                style={{
+                  backgroundColor: currentThemeConfig.preview[0],
+                  ringColor: 'var(--t-bg)',
+                }}
+              />
             </button>
 
-            {/* Themes Selection Popover Menu */}
+            {/* Theme Picker Dropdown */}
             {showThemeMenu && (
-              <div className="absolute left-0 sm:right-auto mt-2 w-64 bg-white dark:bg-[#14201C] rounded-2xl shadow-2xl border border-stone-200 dark:border-emerald-900/60 p-3 z-50 animate-fade-in text-right">
-                <div className="flex items-center justify-between pb-2 border-b border-stone-100 dark:border-emerald-900/30 mb-2">
+              <div
+                className="absolute left-0 mt-2 w-72 rounded-2xl shadow-2xl border p-3 z-50 animate-fade-in text-right theme-transition"
+                style={{
+                  backgroundColor: 'var(--t-card)',
+                  borderColor: 'var(--t-border)',
+                }}
+              >
+                <div
+                  className="flex items-center justify-between pb-2 mb-2 border-b"
+                  style={{ borderColor: 'var(--t-border)' }}
+                >
                   <div className="flex items-center gap-1.5">
-                    <Palette size={15} className="text-emerald-600 dark:text-emerald-400" />
-                    <span className="font-bold text-xs text-stone-800 dark:text-stone-100 font-arabic">مظهر التطبيق والمصحف</span>
+                    <Palette size={15} style={{ color: 'var(--t-accent)' }} />
+                    <span className="font-bold text-xs font-arabic" style={{ color: 'var(--t-text)' }}>
+                      مظهر التطبيق الكامل
+                    </span>
                   </div>
-                  <span className="text-[10px] text-stone-400 font-sans">5 Themes</span>
+                  <span className="text-[10px] font-sans" style={{ color: 'var(--t-muted)' }}>
+                    7 Themes
+                  </span>
                 </div>
 
                 <div className="space-y-1">
                   {APP_THEMES.map((t) => {
                     const TIcon = t.icon;
                     const isActive = theme === t.id;
-
                     return (
                       <button
                         key={t.id}
@@ -189,72 +260,98 @@ export default function Header({
                           setTheme(t.id);
                           setShowThemeMenu(false);
                         }}
-                        className={`w-full flex items-center justify-between p-2 rounded-xl transition-all text-right font-arabic group ${
-                          isActive
-                            ? 'bg-stone-100 dark:bg-emerald-950/80 ring-1 ring-stone-300 dark:ring-emerald-700/60'
-                            : 'hover:bg-stone-50 dark:hover:bg-emerald-950/40'
-                        }`}
+                        className="w-full flex items-center justify-between p-2.5 rounded-xl transition-all text-right font-arabic group theme-transition"
+                        style={{
+                          backgroundColor: isActive ? 'var(--t-surface2)' : 'transparent',
+                          outline: isActive ? `1.5px solid var(--t-accent)` : 'none',
+                        }}
+                        onMouseEnter={e => !isActive && (e.currentTarget.style.backgroundColor = 'var(--t-surface2)')}
+                        onMouseLeave={e => !isActive && (e.currentTarget.style.backgroundColor = 'transparent')}
                       >
+                        {/* Colour swatches */}
                         <div className="flex items-center gap-2.5">
-                          <div className={`w-7 h-7 rounded-lg flex items-center justify-center bg-stone-100 dark:bg-emerald-900/40 ${t.iconColor}`}>
-                            <TIcon size={16} />
+                          <div
+                            className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden shadow-sm"
+                            style={{ backgroundColor: t.preview[2] }}
+                          >
+                            <TIcon size={16} style={{ color: t.preview[0] }} />
                           </div>
                           <div>
-                            <span className={`text-xs font-bold block ${isActive ? 'text-stone-900 dark:text-stone-100' : 'text-stone-700 dark:text-stone-300'}`}>
+                            <span className="text-xs font-bold block leading-tight" style={{ color: 'var(--t-text)' }}>
                               {t.nameAr}
                             </span>
-                            <span className="text-[10px] text-stone-400 block leading-tight">
+                            <span className="text-[10px] leading-tight block mt-0.5" style={{ color: 'var(--t-muted)' }}>
                               {t.desc}
                             </span>
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-1.5">
-                          <span className={`w-2.5 h-2.5 rounded-full ${t.dotBg}`} />
-                          {isActive && (
-                            <Check size={14} className="text-emerald-600 dark:text-emerald-400" />
-                          )}
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          {/* Preview swatches */}
+                          <div className="flex gap-1">
+                            {t.preview.map((c, i) => (
+                              <span key={i} className="w-2.5 h-2.5 rounded-full ring-1 ring-white/30" style={{ backgroundColor: c }} />
+                            ))}
+                          </div>
+                          {isActive && <Check size={14} style={{ color: 'var(--t-accent)' }} />}
                         </div>
                       </button>
                     );
                   })}
                 </div>
+
+                <p className="text-[10px] text-center mt-3 pt-2 border-t font-arabic" style={{ color: 'var(--t-muted)', borderColor: 'var(--t-border)' }}>
+                  المظهر يُطبَّق على كامل التطبيق فوراً ويُحفظ تلقائياً
+                </p>
               </div>
             )}
           </div>
 
-          {/* Notifications button */}
-          <div className="relative">
+          {/* Notifications */}
+          <div className="relative" ref={notifRef}>
             <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="w-9 h-9 rounded-2xl bg-stone-100 dark:bg-emerald-950/60 text-stone-600 dark:text-stone-300 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform border border-stone-200/80 dark:border-emerald-900/50 relative"
+              className="w-9 h-9 rounded-2xl flex items-center justify-center transition-all border relative theme-transition"
+              style={{
+                backgroundColor: 'var(--t-surface2)',
+                borderColor: 'var(--t-border)',
+                color: 'var(--t-text2)',
+              }}
               title="الإشعارات والتنبيهات"
             >
               <Bell size={18} />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-emerald-500 rounded-full"></span>
+              <span
+                className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full ring-1"
+                style={{ backgroundColor: 'var(--t-accent)', ringColor: 'var(--t-bg)' }}
+              />
             </button>
 
             {showNotifications && (
-              <div className="absolute left-0 sm:right-auto mt-2 w-72 bg-white dark:bg-[#14201C] rounded-2xl shadow-2xl border border-stone-200 dark:border-emerald-900/60 p-4 z-50 animate-fade-in text-right">
-                <div className="flex items-center justify-between pb-2 border-b border-stone-100 dark:border-emerald-900/30 mb-3">
-                  <span className="font-bold text-xs text-stone-800 dark:text-stone-100 font-arabic">الإشعارات والتنبيهات</span>
-                  <ShieldCheck size={14} className="text-emerald-500" />
+              <div
+                className="absolute left-0 mt-2 w-72 rounded-2xl shadow-2xl border p-4 z-50 animate-fade-in text-right theme-transition"
+                style={{
+                  backgroundColor: 'var(--t-card)',
+                  borderColor: 'var(--t-border)',
+                }}
+              >
+                <div className="flex items-center justify-between pb-2 border-b mb-3" style={{ borderColor: 'var(--t-border)' }}>
+                  <span className="font-bold text-xs font-arabic" style={{ color: 'var(--t-text)' }}>الإشعارات والتنبيهات</span>
+                  <ShieldCheck size={14} style={{ color: 'var(--t-accent)' }} />
                 </div>
                 <div className="space-y-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40">
-                    <p className="font-bold text-amber-900 dark:text-amber-300 font-arabic">المراجعة اليومية (AI Hifz)</p>
-                    <p className="text-[11px] text-amber-800/80 dark:text-amber-400/80 font-arabic mt-0.5">لديك 12 آية من سورتي الفاتحة والملك حان موعد مراجعتها لتثبيت الحفظ.</p>
+                  <div className="p-2.5 rounded-xl border" style={{ backgroundColor: 'var(--t-surface2)', borderColor: 'var(--t-border)' }}>
+                    <p className="font-bold font-arabic" style={{ color: 'var(--t-text)' }}>المراجعة اليومية (AI Hifz)</p>
+                    <p className="text-[11px] font-arabic mt-0.5" style={{ color: 'var(--t-muted)' }}>لديك 12 آية من سورتي الفاتحة والملك حان موعد مراجعتها لتثبيت الحفظ.</p>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200/60 dark:border-emerald-800/40">
-                    <p className="font-bold text-emerald-900 dark:text-emerald-300 font-arabic">إنجاز جديد</p>
-                    <p className="text-[11px] text-emerald-800/80 dark:text-emerald-400/80 font-arabic mt-0.5">أكملت بنجاح اختبار سورة الإخلاص بنسبة إتقان 98%!</p>
+                  <div className="p-2.5 rounded-xl border" style={{ backgroundColor: 'var(--t-surface2)', borderColor: 'var(--t-border)' }}>
+                    <p className="font-bold font-arabic" style={{ color: 'var(--t-text)' }}>إنجاز جديد 🏆</p>
+                    <p className="text-[11px] font-arabic mt-0.5" style={{ color: 'var(--t-muted)' }}>أكملت بنجاح اختبار سورة الإخلاص بنسبة إتقان 98%!</p>
                   </div>
                 </div>
               </div>
             )}
           </div>
         </div>
-
       </div>
     </header>
   );
