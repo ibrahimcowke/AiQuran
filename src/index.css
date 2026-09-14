@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .glass-card-dark {
+    background: rgba(18, 26, 23, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+}
+
+:root, [data-theme="emerald"] {
+  --bg-primary: #F8F9F5;
+  --text-primary: #1C1F1D;
+  --accent-gold: #D4AF37;
+  --accent-emerald: #059669;
+  --theme-ring: rgba(5, 150, 105, 0.3);
+}
+
+[data-theme="dark"], .dark {
+  --bg-primary: #0A110F;
+  --text-primary: #F3F4F1;
+  --accent-gold: #F59E0B;
+  --accent-emerald: #10B981;
+  --theme-ring: rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="amber"] {
+  --bg-primary: #FDF8EE;
+  --text-primary: #281A08;
+  --accent-gold: #D97706;
+  --accent-emerald: #B45309;
+  --theme-ring: rgba(217, 119, 6, 0.3);
+}
+
+[data-theme="blue"] {
+  --bg-primary: #F0F7FF;
+  --text-primary: #0F172A;
+  --accent-gold: #0284C7;
+  --accent-emerald: #0369A1;
+  --theme-ring: rgba(2, 132, 199, 0.3);
+}
+
+[data-theme="sepia"] {
+  --bg-primary: #F6EFE2;
+  --text-primary: #2A1E11;
+  --accent-gold: #8C6D38;
+  --accent-emerald: #A17D46;
+  --theme-ring: rgba(140, 109, 56, 0.3);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-arabic {
+  font-family: 'Amiri', 'Cairo', 'Scheherazade New', serif;
+}
+
+.font-uthmani {
+  font-family: 'Amiri', 'Scheherazade New', serif;
+  line-height: 2.8;
+  word-spacing: 0.15em;
+}
+
+/* Tajweed Rule Highlights */
+.tajweed-qalqalah {
+  color: #2563EB; /* Blue */
+  font-weight: 700;
+  border-bottom: 2px dotted #93C5FD;
+}
+.tajweed-ghunnah {
+  color: #D97706; /* Amber */
+  font-weight: 700;
+  border-bottom: 2px dotted #FDE68A;
+}
+.tajweed-madd {
+  color: #DC2626; /* Crimson Red */
+  font-weight: 700;
+  border-bottom: 2px dotted #FCA5A5;
+}
+.tajweed-ikhfa {
+  color: #059669; /* Emerald */
+  font-weight: 700;
+  border-bottom: 2px dotted #A7F3D0;
+}
