@@ -62,6 +62,43 @@ const playSynthSound = (type) => {
   }
 };
 
+// Shuffle an array using Fisher-Yates algorithm
+const shuffleArray = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+// Shuffle a question's answer options while keeping correctAnswerIndex in sync
+const shuffleQuestionOptions = (question) => {
+  if (!question.optionsAr || question.optionsAr.length === 0) return question;
+
+  const indices = question.optionsAr.map((_, i) => i);
+  const shuffledIndices = shuffleArray(indices);
+
+  return {
+    ...question,
+    optionsAr: shuffledIndices.map(i => question.optionsAr[i]),
+    optionsEn: question.optionsEn ? shuffledIndices.map(i => question.optionsEn[i]) : undefined,
+    correctAnswerIndex: shuffledIndices.indexOf(question.correctAnswerIndex),
+  };
+};
+
+// Remove duplicate questions by id, then shuffle options on each
+const prepareQuestions = (rawQuestions) => {
+  const seen = new Set();
+  const unique = rawQuestions.filter(q => {
+    if (!q || !q.id) return false;
+    if (seen.has(q.id)) return false;
+    seen.add(q.id);
+    return true;
+  });
+  return unique.map(shuffleQuestionOptions);
+};
+
 export default function QuizArena({ setView }) {
   // Quiz Selection Modes: 'collection' | 'surah' | 'category'
   const [activeMode, setActiveMode] = useState('collection');
@@ -143,7 +180,8 @@ export default function QuizArena({ setView }) {
       difficulty: selectedDifficulty,
       ...overrideParams
     };
-    const loaded = getQuizQuestions(params);
+    const raw = getQuizQuestions(params);
+    const loaded = prepareQuestions(raw);
     setQuestions(loaded);
     setCurrentQuestionIndex(0);
     setSelectedAnswerIndex(null);
