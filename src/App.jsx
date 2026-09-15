@@ -198,7 +198,7 @@ export default function App() {
           />
 
           {/* View Container with bottom padding for audio bar and bottom nav */}
-          <main className="flex-1 pb-36 lg:pb-28">
+          <main className={`flex-1 ${currentView === 'listener' ? 'pb-36 lg:pb-28' : 'pb-24 lg:pb-8'}`}>
             {currentView === 'dashboard' && (
               <DashboardView
                 setView={setCurrentView}
@@ -326,15 +326,17 @@ export default function App() {
         />
       )}
 
-      {/* Global Persistent Audio Recitation Player */}
-      <AudioPlayerBar
-        currentSurah={currentSurah}
-        currentAyahNumber={currentAyahNumber}
-        setCurrentAyahNumber={setCurrentAyahNumber}
-        selectedReciter={selectedReciter}
-        isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
-      />
+      {/* Audio Recitation Player - only visible on listener page */}
+      {currentView === 'listener' && (
+        <AudioPlayerBar
+          currentSurah={currentSurah}
+          currentAyahNumber={currentAyahNumber}
+          setCurrentAyahNumber={setCurrentAyahNumber}
+          selectedReciter={selectedReciter}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
+      )}
 
       {/* Mobile Bottom Navigation Bar */}
       <BottomNav
