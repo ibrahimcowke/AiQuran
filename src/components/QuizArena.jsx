@@ -87,7 +87,7 @@ const shuffleQuestionOptions = (question) => {
   };
 };
 
-// Remove duplicate questions by id, then shuffle options on each
+// Remove duplicate questions by id, then shuffle question order and options on each
 const prepareQuestions = (rawQuestions) => {
   const seen = new Set();
   const unique = rawQuestions.filter(q => {
@@ -96,7 +96,7 @@ const prepareQuestions = (rawQuestions) => {
     seen.add(q.id);
     return true;
   });
-  return unique.map(shuffleQuestionOptions);
+  return shuffleArray(unique).map(shuffleQuestionOptions);
 };
 
 export default function QuizArena({ setView }) {
@@ -795,13 +795,17 @@ export default function QuizArena({ setView }) {
                   <span className="text-xs font-bold text-stone-500 dark:text-stone-400 font-arabic block mb-2">التصنيف العلمي:</span>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { id: 'all', label: 'كافة العلوم القرآنية' },
+                      { id: 'all', label: 'كافة العلوم القرآنية (الكل)' },
+                      { id: 'tajweed', label: 'أحكام التجويد والمخارج' },
+                      { id: 'ayah_completion', label: 'تحدي إكمال الآيات' },
                       { id: 'mutashabihat', label: 'متشابهات القرآن والفواصل' },
                       { id: 'gharib_quran', label: 'غريب القرآن والمفردات' },
-                      { id: 'ayah_completion', label: 'تحدي إكمال الآيات' },
-                      { id: 'tajweed', label: 'أحكام التجويد والمخارج' },
                       { id: 'asbab_nuzul', label: 'أسباب النزول وفضائل السور' },
-                      { id: 'tiwal', label: 'السبع الطوال' }
+                      { id: 'tiwal', label: 'السبع الطوال' },
+                      { id: 'musabbihat', label: 'السور المُسبّحات' },
+                      { id: 'hawameem', label: 'الحواميم السبع' },
+                      { id: 'prophets', label: 'قصص الأنبياء' },
+                      { id: 'juz_amma', label: 'جزء عم' }
                     ].map(cat => (
                       <button
                         key={cat.id}
@@ -1082,22 +1086,43 @@ export default function QuizArena({ setView }) {
                 }
               }
 
+              const arabicLetter = ['أ', 'ب', 'ج', 'د'][idx] || (idx + 1);
+              const englishLetter = ['A', 'B', 'C', 'D'][idx] || (idx + 1);
+
+              let badgeClass = "bg-stone-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60";
+              if (isAnswered) {
+                if (idx === question.correctAnswerIndex) {
+                  badgeClass = "bg-emerald-600 text-white border-emerald-500 shadow-sm";
+                } else if (idx === selectedAnswerIndex) {
+                  badgeClass = "bg-red-500 text-white border-red-500 shadow-sm";
+                } else {
+                  badgeClass = "bg-stone-100 dark:bg-[#0E1715] text-stone-400 border-stone-200 dark:border-emerald-950/40 opacity-60";
+                }
+              }
+
               return (
                 <button
                   key={idx}
                   onClick={() => handleAnswer(idx)}
                   disabled={isAnswered}
-                  className={`p-4 sm:p-5 rounded-2xl border-2 text-right transition-all flex items-center justify-between gap-3 ${btnClass}`}
+                  className={`p-4 sm:p-5 rounded-2xl border-2 text-right transition-all flex items-center justify-between gap-3 group ${btnClass}`}
                 >
-                  <div>
-                    <span className="font-bold text-base sm:text-lg font-arabic block leading-tight mb-1">
-                      {optAr}
-                    </span>
-                    {optEn && (
-                      <span className="text-xs text-stone-400 font-sans block" dir="ltr">
-                        {optEn}
+                  <div className="flex items-center gap-3.5 flex-1 min-w-0">
+                    <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex flex-col items-center justify-center shrink-0 font-bold transition-all ${badgeClass}`}>
+                      <span className="text-sm sm:text-base font-arabic leading-none">{arabicLetter}</span>
+                      <span className="text-[9px] font-sans opacity-75 leading-none mt-0.5">{englishLetter}</span>
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <span className="font-bold text-base sm:text-lg font-arabic block leading-tight mb-1">
+                        {optAr}
                       </span>
-                    )}
+                      {optEn && (
+                        <span className="text-xs text-stone-400 font-sans block" dir="ltr">
+                          {optEn}
+                        </span>
+                      )}
+                    </div>
                   </div>
                   {icon}
                 </button>
