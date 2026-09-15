@@ -1,13 +1,13 @@
 import React from 'react';
-import { BookOpen, Book, Headphones, Award, User } from 'lucide-react';
+import { BookOpen, Book, Award, Target, BarChart2 } from 'lucide-react';
 
 export default function BottomNav({ currentView, setView }) {
   const tabs = [
     { id: 'dashboard', labelAr: 'الرئيسية', icon: BookOpen },
     { id: 'mushaf', labelAr: 'المصحف', icon: Book },
-    { id: 'listener', labelAr: 'استماع', icon: Headphones },
     { id: 'hifz', labelAr: 'الحفظ', icon: Award },
-    { id: 'profile', labelAr: 'حسابي', icon: User },
+    { id: 'dhikr', labelAr: 'الذكر', icon: Target },
+    { id: 'analytics', labelAr: 'إحصائياتي', icon: BarChart2 },
   ];
 
   return (
@@ -20,8 +20,8 @@ export default function BottomNav({ currentView, setView }) {
             key={tab.id}
             onClick={() => setView(tab.id)}
             className={`flex flex-col items-center gap-1 py-1 px-3 rounded-2xl transition-all ${
-              isActive 
-                ? 'text-emerald-700 dark:text-emerald-300 font-bold scale-105' 
+              isActive
+                ? 'text-emerald-700 dark:text-emerald-300 font-bold scale-105'
                 : 'text-stone-400 dark:text-stone-400 hover:text-stone-600'
             }`}
           >

@@ -11,6 +11,15 @@ import QuizArena from './components/QuizArena';
 import ProfileSettings from './components/ProfileSettings';
 import QuranListener from './components/QuranListener';
 import GlobalSearchModal from './components/GlobalSearchModal';
+import TafsirView from './components/TafsirView';
+import WirdPlanner from './components/WirdPlanner';
+import AnalyticsDashboard from './components/AnalyticsDashboard';
+import TajweedGuide from './components/TajweedGuide';
+import BookmarksManager from './components/BookmarksManager';
+import JuzNavigator from './components/JuzNavigator';
+import FocusMode from './components/FocusMode';
+import DhikrCounter from './components/DhikrCounter';
+import Community from './components/Community';
 import { SURAHS_INDEX, SURAH_DETAILS, RECITERS } from './data/quranData';
 
 export default function App() {
@@ -251,11 +260,71 @@ export default function App() {
                 setTheme={setTheme}
               />
             )}
+
+            {currentView === 'tafsir' && (
+              <TafsirView
+                setView={setCurrentView}
+                setActiveSurahId={setActiveSurahId}
+                setCurrentAyahNumber={setCurrentAyahNumber}
+              />
+            )}
+
+            {currentView === 'wird' && (
+              <WirdPlanner
+                setView={setCurrentView}
+                setActiveSurahId={setActiveSurahId}
+              />
+            )}
+
+            {currentView === 'analytics' && (
+              <AnalyticsDashboard />
+            )}
+
+            {currentView === 'tajweed' && (
+              <TajweedGuide />
+            )}
+
+            {currentView === 'bookmarks' && (
+              <BookmarksManager
+                bookmarks={parsedBookmarks}
+                toggleBookmark={toggleBookmark}
+                setView={setCurrentView}
+                setActiveSurahId={setActiveSurahId}
+                setCurrentAyahNumber={setCurrentAyahNumber}
+              />
+            )}
+
+            {currentView === 'juz' && (
+              <JuzNavigator
+                setView={setCurrentView}
+                setActiveSurahId={setActiveSurahId}
+                setCurrentAyahNumber={setCurrentAyahNumber}
+              />
+            )}
+
+            {currentView === 'dhikr' && (
+              <DhikrCounter />
+            )}
+
+            {currentView === 'community' && (
+              <Community />
+            )}
           </main>
 
         </div>
 
       </div>
+
+      {/* FocusMode Fullscreen Overlay */}
+      {currentView === 'focus' && (
+        <FocusMode
+          onExit={() => setCurrentView('mushaf')}
+          activeSurahId={activeSurahId}
+          currentAyahNumber={currentAyahNumber}
+          setActiveSurahId={setActiveSurahId}
+          setCurrentAyahNumber={setCurrentAyahNumber}
+        />
+      )}
 
       {/* Global Persistent Audio Recitation Player */}
       <AudioPlayerBar

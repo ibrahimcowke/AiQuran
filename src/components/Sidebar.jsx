@@ -1,10 +1,55 @@
 import React from 'react';
-import { 
-  BookOpen, HelpCircle, Book, Mic, Award, Settings, 
-  Sparkles, X, Volume2, Headphones, User
+import {
+  BookOpen, HelpCircle, Book, Mic, Award, Settings,
+  Sparkles, X, Headphones, User, BookText, CalendarCheck,
+  BarChart2, Layers, Bookmark, Target, Moon, Trophy
 } from 'lucide-react';
 import AvatarBadge from './AvatarBadge';
 import QuranLogo from './QuranLogo';
+
+const NAV_SECTIONS = [
+  {
+    label: 'الرئيسية',
+    items: [
+      { id: 'dashboard', labelAr: 'الرئيسية', labelEn: 'Dashboard', icon: BookOpen, badge: null },
+    ]
+  },
+  {
+    label: 'التلاوة والاستماع',
+    items: [
+      { id: 'mushaf', labelAr: 'المصحف الشريف', labelEn: 'Verified Mushaf', icon: Book, badge: '114' },
+      { id: 'listener', labelAr: 'ركن الاستماع', labelEn: 'Quran Listener', icon: Headphones, badge: 'Sleep' },
+      { id: 'tafsir', labelAr: 'التفسير والبيان', labelEn: 'Tafsir', icon: BookText, badge: null },
+      { id: 'focus', labelAr: 'وضع التركيز', labelEn: 'Focus Mode', icon: Moon, badge: 'Dark' },
+    ]
+  },
+  {
+    label: 'الحفظ والتعلم',
+    items: [
+      { id: 'hifz', labelAr: 'مخطط الحفظ', labelEn: 'Hifz Planner', icon: Award, badge: 'SRS' },
+      { id: 'juz', labelAr: 'الأجزاء الثلاثون', labelEn: 'Juz Navigator', icon: Layers, badge: '30' },
+      { id: 'tajweed', labelAr: 'أحكام التجويد', labelEn: 'Tajweed Guide', icon: BookOpen, badge: null },
+      { id: 'quiz', labelAr: 'تحدي القرآن', labelEn: 'Quiz Arena', icon: HelpCircle, badge: 'Hot' },
+    ]
+  },
+  {
+    label: 'الأدوات والتتبع',
+    items: [
+      { id: 'voicelab', labelAr: 'معمل التلاوة', labelEn: 'AI Voice Lab', icon: Mic, badge: 'AI' },
+      { id: 'wird', labelAr: 'الورد اليومي', labelEn: 'Wird Planner', icon: CalendarCheck, badge: null },
+      { id: 'dhikr', labelAr: 'عداد الذكر', labelEn: 'Dhikr Counter', icon: Target, badge: null },
+      { id: 'bookmarks', labelAr: 'إشاراتي المرجعية', labelEn: 'Bookmarks', icon: Bookmark, badge: null },
+      { id: 'analytics', labelAr: 'إحصائياتي', labelEn: 'Analytics', icon: BarChart2, badge: null },
+      { id: 'community', labelAr: 'المجتمع', labelEn: 'Community', icon: Trophy, badge: 'New' },
+    ]
+  },
+  {
+    label: 'الحساب',
+    items: [
+      { id: 'profile', labelAr: 'حسابي والإعدادات', labelEn: 'Profile & Settings', icon: User, badge: null },
+    ]
+  },
+];
 
 export default function Sidebar({
   currentView,
@@ -14,16 +59,6 @@ export default function Sidebar({
   userProfile,
   memorizationStats
 }) {
-  const navItems = [
-    { id: 'dashboard', labelAr: 'الرئيسية', labelEn: 'Dashboard', icon: BookOpen, badge: null },
-    { id: 'mushaf', labelAr: 'المصحف الشريف', labelEn: 'Verified Mushaf', icon: Book, badge: '114' },
-    { id: 'listener', labelAr: 'ركن الاستماع', labelEn: 'Quran Listener', icon: Headphones, badge: 'Sleep' },
-    { id: 'voicelab', labelAr: 'معمل التلاوة', labelEn: 'AI Voice Lab', icon: Mic, badge: 'AI' },
-    { id: 'hifz', labelAr: 'مخطط الحفظ', labelEn: 'Hifz Planner', icon: Award, badge: 'SRS' },
-    { id: 'quiz', labelAr: 'تحدي القرآن', labelEn: 'Quiz Arena', icon: HelpCircle, badge: 'Hot' },
-    { id: 'profile', labelAr: 'حسابي والإعدادات', labelEn: 'Profile & Settings', icon: User, badge: null },
-  ];
-
   return (
     <>
       {/* Mobile Backdrop */}
@@ -48,8 +83,8 @@ export default function Sidebar({
         }}
         dir="rtl"
       >
-        <div className="overflow-y-auto pb-4">
-          
+        <div className="overflow-y-auto pb-4 flex-1">
+
           {/* Brand Header */}
           <div
             className="flex items-center justify-between pb-5 mb-4 border-b theme-transition"
@@ -79,67 +114,73 @@ export default function Sidebar({
             </button>
           </div>
 
-          {/* Navigation Links */}
-          <nav className="space-y-1">
-            {navItems.map((item) => {
-              const isActive = currentView === item.id;
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setView(item.id);
-                    closeMobileMenu();
-                  }}
-                  className={`
-                    w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl font-arabic transition-all theme-transition
-                    ${isActive ? 'nav-active font-bold scale-[1.02]' : 'font-medium'}
-                  `}
-                  style={isActive ? {} : {
-                    color: 'var(--t-text2)',
-                  }}
-                  onMouseEnter={e => !isActive && (e.currentTarget.style.backgroundColor = 'var(--t-surface2)')}
-                  onMouseLeave={e => !isActive && (e.currentTarget.style.backgroundColor = 'transparent')}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      size={19}
-                      style={isActive
-                        ? { color: 'rgba(255,255,255,0.9)' }
-                        : { color: 'var(--t-accent)' }
-                      }
-                    />
-                    <div className="text-right">
-                      <span className="text-xs sm:text-sm block leading-tight">{item.labelAr}</span>
-                      <span
-                        className="text-[8px] font-sans font-normal opacity-80"
-                        dir="ltr"
-                        style={isActive ? { color: 'rgba(255,255,255,0.7)' } : { color: 'var(--t-muted)' }}
+          {/* Navigation Sections */}
+          <nav className="space-y-4">
+            {NAV_SECTIONS.map((section) => (
+              <div key={section.label}>
+                <p className="text-[9px] font-bold uppercase tracking-widest font-sans px-3.5 mb-1.5 theme-transition" style={{ color: 'var(--t-muted)' }}>
+                  {section.label}
+                </p>
+                <div className="space-y-0.5">
+                  {section.items.map((item) => {
+                    const isActive = currentView === item.id;
+                    const Icon = item.icon;
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => {
+                          setView(item.id);
+                          closeMobileMenu();
+                        }}
+                        className={`
+                          w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl font-arabic transition-all theme-transition
+                          ${isActive ? 'nav-active font-bold scale-[1.02]' : 'font-medium'}
+                        `}
+                        style={isActive ? {} : { color: 'var(--t-text2)' }}
+                        onMouseEnter={e => !isActive && (e.currentTarget.style.backgroundColor = 'var(--t-surface2)')}
+                        onMouseLeave={e => !isActive && (e.currentTarget.style.backgroundColor = 'transparent')}
                       >
-                        {item.labelEn}
-                      </span>
-                    </div>
-                  </div>
-
-                  {item.badge && (
-                    <span
-                      className="text-[9px] px-2 py-0.5 rounded-full font-bold font-sans theme-transition"
-                      style={isActive
-                        ? { backgroundColor: 'rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.9)' }
-                        : { backgroundColor: 'var(--t-surface2)', color: 'var(--t-accent)' }
-                      }
-                    >
-                      {item.badge}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
+                        <div className="flex items-center gap-3">
+                          <Icon
+                            size={17}
+                            style={isActive
+                              ? { color: 'rgba(255,255,255,0.9)' }
+                              : { color: 'var(--t-accent)' }
+                            }
+                          />
+                          <div className="text-right">
+                            <span className="text-xs block leading-tight">{item.labelAr}</span>
+                            <span
+                              className="text-[8px] font-sans font-normal opacity-70"
+                              dir="ltr"
+                              style={isActive ? { color: 'rgba(255,255,255,0.6)' } : { color: 'var(--t-muted)' }}
+                            >
+                              {item.labelEn}
+                            </span>
+                          </div>
+                        </div>
+                        {item.badge && (
+                          <span
+                            className="text-[9px] px-2 py-0.5 rounded-full font-bold font-sans theme-transition"
+                            style={isActive
+                              ? { backgroundColor: 'rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.9)' }
+                              : { backgroundColor: 'var(--t-surface2)', color: 'var(--t-accent)' }
+                            }
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
 
           {/* Hifz Progress Widget */}
           <div
-            className="mt-6 p-4 rounded-2xl border theme-transition"
+            className="mt-4 p-4 rounded-2xl border theme-transition"
             style={{
               backgroundColor: 'var(--t-surface2)',
               borderColor: 'var(--t-border)',

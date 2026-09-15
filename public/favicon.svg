@@ -1,115 +1,123 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
   <defs>
-    <!-- Background Emerald Gradient -->
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#10B981" />
-      <stop offset="35%" stop-color="#059669" />
-      <stop offset="100%" stop-color="#064E3B" />
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="45%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#064E3B"/>
     </linearGradient>
-
-    <!-- Imperial Gold Gradient -->
-    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFBEB" />
-      <stop offset="25%" stop-color="#FCD34D" />
-      <stop offset="60%" stop-color="#F59E0B" />
-      <stop offset="100%" stop-color="#B45309" />
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF8E1"/>
+      <stop offset="30%" stop-color="#FFD54F"/>
+      <stop offset="65%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#92400E"/>
     </linearGradient>
-
-    <!-- Deep Gold Gradient -->
-    <linearGradient id="deepGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FBBF24" />
-      <stop offset="100%" stop-color="#78350F" />
+    <linearGradient id="goldV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#B45309"/>
     </linearGradient>
-
-    <!-- Book Page Cream Gradient -->
-    <linearGradient id="pageGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FAF5E6" />
-      <stop offset="50%" stop-color="#FFFDF8" />
-      <stop offset="100%" stop-color="#F3EAD3" />
+    <linearGradient id="page" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FAF5E4"/>
+      <stop offset="50%" stop-color="#FFFDF6"/>
+      <stop offset="100%" stop-color="#F3EAD3"/>
     </linearGradient>
-
-    <!-- AI Cyan/Mint Sparkle Gradient -->
-    <linearGradient id="aiSparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#A7F3D0" />
-      <stop offset="100%" stop-color="#34D399" />
-    </linearGradient>
-
-    <!-- Glow Filter -->
-    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="10" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <radialGradient id="glow" cx="50%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#34D399" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#064E3B" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <filter id="glow-star" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
 
-  <!-- Base Squircle with Shadow -->
-  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bgGrad)" />
-  <rect x="22" y="22" width="468" height="468" rx="102" fill="none" stroke="url(#goldGrad)" stroke-width="6" opacity="0.85" />
-  <rect x="34" y="34" width="444" height="444" rx="90" fill="none" stroke="#34D399" stroke-width="2" opacity="0.3" stroke-dasharray="8 6" />
+  <!-- Background rounded rect -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- Radial glow -->
+  <rect width="512" height="512" rx="112" fill="url(#glow)"/>
+  <!-- Gold border ring -->
+  <rect x="14" y="14" width="484" height="484" rx="100" stroke="url(#gold)" stroke-width="5" fill="none" opacity="0.7"/>
+  <!-- Inner subtle dashed ring -->
+  <rect x="26" y="26" width="460" height="460" rx="88" stroke="#34D399" stroke-width="1.5" fill="none" stroke-dasharray="8 7" opacity="0.3"/>
 
-  <!-- Background Islamic Arch / Mihrab Outline -->
-  <path d="M156 410 V 230 C 156 160, 256 110, 256 110 C 256 110, 356 160, 356 230 V 410" 
-        fill="none" stroke="url(#goldGrad)" stroke-width="3" opacity="0.25" />
-
-  <!-- Radiance Aura behind the Star -->
-  <circle cx="256" cy="180" r="85" fill="#F59E0B" opacity="0.12" filter="url(#goldGlow)" />
-
-  <!-- Gilded 8-Pointed Star (Rub el Hizb ۞ / AI Intelligent Crown) -->
-  <g transform="translate(256, 180)" filter="url(#goldGlow)">
-    <!-- First Square -->
-    <rect x="-38" y="-38" width="76" height="76" rx="9" fill="url(#goldGrad)" />
-    <!-- Rotated 45-degree Square -->
-    <rect x="-38" y="-38" width="76" height="76" rx="9" fill="url(#goldGrad)" transform="rotate(45)" />
-    <!-- Inner Central Core -->
-    <circle cx="0" cy="0" r="24" fill="#064E3B" />
-    <circle cx="0" cy="0" r="19" fill="url(#goldGrad)" opacity="0.4" />
-    <!-- AI Intelligence Diamond Sparkle -->
-    <path d="M0 -15 Q 0 0 -15 0 Q 0 0 0 15 Q 0 0 15 0 Q 0 0 0 -15 Z" fill="#FFFFFF" />
-    <circle cx="0" cy="0" r="3.5" fill="#047857" />
+  <!-- 8-Pointed Islamic Star (Rub el Hizb) -->
+  <g transform="translate(256, 196)" filter="url(#glow-star)">
+    <!-- Outer star glow halo -->
+    <circle cx="0" cy="0" r="90" fill="#FFD54F" opacity="0.08"/>
+    <!-- Two overlapping squares making 8-pointed star -->
+    <rect x="-60" y="-60" width="120" height="120" rx="10" fill="url(#gold)"/>
+    <rect x="-60" y="-60" width="120" height="120" rx="10" fill="url(#gold)" transform="rotate(45)"/>
+    <!-- Inner dark circle -->
+    <circle cx="0" cy="0" r="38" fill="#065F46"/>
+    <!-- Inner gold ring -->
+    <circle cx="0" cy="0" r="33" fill="none" stroke="#FDE68A" stroke-width="2.5" opacity="0.6"/>
+    <!-- AI Diamond / Sparkle center -->
+    <path d="M0 -22 Q5 -5 22 0 Q5 5 0 22 Q-5 5 -22 0 Q-5 -5 0 -22 Z" fill="white" opacity="0.95"/>
+    <circle cx="0" cy="0" r="5" fill="#059669"/>
+    <circle cx="0" cy="0" r="2.5" fill="#A7F3D0"/>
   </g>
 
-  <!-- Open Holy Quran Book (المصحف الشريف) -->
-  <g id="holy-quran" transform="translate(0, 35)">
-    <!-- Book Backing Shadow / Cover -->
-    <path d="M96 345 C 160 330, 235 348, 256 362 C 277 348, 352 330, 416 345 V 360 C 352 345, 277 362, 256 376 C 235 362, 160 345, 96 360 Z" 
-          fill="url(#deepGoldGrad)" />
+  <!-- Open Quran Book -->
+  <g filter="url(#shadow)">
+    <!-- Book base / cover bottom -->
+    <path d="M88 378 C160 360 230 375 254 390 C278 375 352 360 424 378 L424 396 C352 378 278 392 254 408 C230 392 160 378 88 396 Z" fill="url(#gold)"/>
 
-    <!-- Left Open Page -->
-    <path d="M102 245 C 165 228, 236 242, 254 262 L 254 366 C 236 346, 165 332, 102 348 Z" 
-          fill="url(#pageGrad)" stroke="#D4AF37" stroke-width="2" />
+    <!-- Left page -->
+    <path d="M94 272 C158 254 228 268 252 290 L252 390 C228 368 158 354 94 372 Z"
+          fill="url(#page)" stroke="#D4AF37" stroke-width="3"/>
+    <!-- Left page gold border inner -->
+    <path d="M108 284 C162 270 226 282 248 300 L248 378 C224 362 162 350 108 364 Z"
+          stroke="#C9870A" stroke-width="1.5" fill="none" opacity="0.5"/>
 
-    <!-- Right Open Page -->
-    <path d="M410 245 C 347 228, 276 242, 258 262 L 258 366 C 276 346, 347 332, 410 348 Z" 
-          fill="url(#pageGrad)" stroke="#D4AF37" stroke-width="2" />
+    <!-- Right page -->
+    <path d="M418 272 C354 254 284 268 260 290 L260 390 C284 368 354 354 418 372 Z"
+          fill="url(#page)" stroke="#D4AF37" stroke-width="3"/>
+    <!-- Right page gold border inner -->
+    <path d="M404 284 C350 270 286 282 264 300 L264 378 C288 362 350 350 404 364 Z"
+          stroke="#C9870A" stroke-width="1.5" fill="none" opacity="0.5"/>
 
-    <!-- Left Page Texture / Calligraphy Lines -->
-    <g opacity="0.35" stroke="#78350F" stroke-width="2.5" stroke-linecap="round">
-      <line x1="126" y1="272" x2="232" y2="280" />
-      <line x1="126" y1="292" x2="232" y2="300" />
-      <line x1="126" y1="312" x2="232" y2="320" />
-      <line x1="140" y1="332" x2="218" y2="338" />
+    <!-- Left page calligraphy lines -->
+    <g stroke="#8B5E3C" stroke-width="2" stroke-linecap="round" opacity="0.45">
+      <line x1="118" y1="310" x2="234" y2="318"/>
+      <line x1="118" y1="328" x2="234" y2="336"/>
+      <line x1="118" y1="346" x2="234" y2="354"/>
+      <line x1="130" y1="364" x2="220" y2="370"/>
     </g>
 
-    <!-- Right Page Texture / Calligraphy Lines -->
-    <g opacity="0.35" stroke="#78350F" stroke-width="2.5" stroke-linecap="round">
-      <line x1="280" y1="280" x2="386" y2="272" />
-      <line x1="280" y1="300" x2="386" y2="292" />
-      <line x1="280" y1="320" x2="386" y2="312" />
-      <line x1="294" y1="338" x2="372" y2="332" />
+    <!-- Right page calligraphy lines -->
+    <g stroke="#8B5E3C" stroke-width="2" stroke-linecap="round" opacity="0.45">
+      <line x1="278" y1="318" x2="394" y2="310"/>
+      <line x1="278" y1="336" x2="394" y2="328"/>
+      <line x1="278" y1="354" x2="394" y2="346"/>
+      <line x1="292" y1="370" x2="382" y2="364"/>
     </g>
 
-    <!-- Page Gilded Corner Flourishes -->
-    <path d="M112 258 L 126 255 L 126 269" fill="none" stroke="#D97706" stroke-width="2" opacity="0.7" />
-    <path d="M400 258 L 386 255 L 386 269" fill="none" stroke="#D97706" stroke-width="2" opacity="0.7" />
+    <!-- Golden spine -->
+    <rect x="251" y="286" width="10" height="110" fill="url(#goldV)" rx="2"/>
 
-    <!-- Golden Spine and Bookmark Ribbon -->
-    <path d="M253 260 H 259 V 390 H 253 Z" fill="url(#goldGrad)" />
-    <!-- Gilded Silk Ribbon Bookmark hanging below -->
-    <path d="M251 366 L 251 422 L 256 414 L 261 422 L 261 366 Z" fill="url(#goldGrad)" filter="url(#goldGlow)" />
+    <!-- Silk bookmark ribbon -->
+    <path d="M249 370 L249 438 L256 428 L263 438 L263 370 Z" fill="url(#gold)"/>
   </g>
 
-  <!-- Mini AI Radiance Stars -->
-  <path d="M120 150 Q 120 160 110 160 Q 120 160 120 170 Q 120 160 130 160 Q 120 160 120 150 Z" fill="#FDE68A" opacity="0.8" />
-  <path d="M392 150 Q 392 160 382 160 Q 392 160 392 170 Q 392 160 402 160 Q 392 160 392 150 Z" fill="#FDE68A" opacity="0.8" />
-  <circle cx="160" cy="118" r="3" fill="#A7F3D0" opacity="0.7" />
-  <circle cx="352" cy="118" r="3" fill="#A7F3D0" opacity="0.7" />
+  <!-- Corner Sparkles -->
+  <!-- Top left sparkle -->
+  <g fill="#FDE68A" opacity="0.9">
+    <path d="M102 118 Q102 132 88 132 Q102 132 102 146 Q102 132 116 132 Q102 132 102 118 Z"/>
+    <circle cx="102" cy="132" r="2.5" fill="#FFF8E1"/>
+  </g>
+  <!-- Top right sparkle -->
+  <g fill="#FDE68A" opacity="0.9">
+    <path d="M410 118 Q410 132 396 132 Q410 132 410 146 Q410 132 424 132 Q410 132 410 118 Z"/>
+    <circle cx="410" cy="132" r="2.5" fill="#FFF8E1"/>
+  </g>
+  <!-- Small top center sparkle -->
+  <path d="M256 68 Q256 76 248 76 Q256 76 256 84 Q256 76 264 76 Q256 76 256 68 Z" fill="#FDE68A" opacity="0.7"/>
+
+  <!-- Tiny dot accents -->
+  <circle cx="148" cy="148" r="3" fill="#A7F3D0" opacity="0.5"/>
+  <circle cx="364" cy="148" r="3" fill="#A7F3D0" opacity="0.5"/>
+  <circle cx="80" cy="200" r="2" fill="#FDE68A" opacity="0.4"/>
+  <circle cx="432" cy="200" r="2" fill="#FDE68A" opacity="0.4"/>
 </svg>
